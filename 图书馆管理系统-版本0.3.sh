@@ -2,7 +2,6 @@
 #图书管理系统
 #作者：Lyons 
 #日期： 2015/10/26
-# superhookm@gmail.com
 
 
 Welcome()
@@ -42,9 +41,9 @@ read  -p  "请小主选择：" choice
 
 case $choice in
 	1)
-		add_book		;;
+		add_book	;;
 	2)
-		del_book		;;
+		del_book	;;
 	3)
 		display_List	;;
 	4)
@@ -53,29 +52,30 @@ case $choice in
 		clear
 		quit_saybaby   	;;
 	*)
-		Main_menu 		;;
+		Main_menu 	;;
 esac
 }
     #实现添加图书功能
+    # /c 将一本书的所有信息连为一行信息
 
 add_book()
 {
 clear
 echo  -e "\t\t\t\t \e[1;46m   图书管理系统-版本0.3   \e[0m"
   echo  -e "\n\n\n开始录入图书信息\n" 
-  read    -p "请输入图书的书名：" a b c d e f g h #假设书名不会超过15字符、另外先不判断不输入情况
-  	 	add_book_name=`echo "$a $b $c $d $e $f $g $h"` #是取反
+  read    -p "请输入图书的书名：" a b c d e f g h 			#假设书名不会超过15字符、另外先不判断不输入情况
+  	 	add_book_name=`echo "$a $b $c $d $e $f $g $h"		#符号 ` 是取反
   	  echo -e "Bookname:$add_book_name\c" > add_book_temp
-  read   -p "请输入图书的作者：" a b c d e f g h #假设作者名字不会超过15字符、另外先不判断不输入情况
-  	 	add_book_author=`echo  "$a $b $c $d $e $f $g $h"` #是取反
+  read   -p "请输入图书的作者：" a b c d e f g h 
+  	 	add_book_author=`echo  "$a $b $c $d $e $f $g $h"` 
   	  echo  -e " Author:$add_book_author\c" >> add_book_temp
-  read    -p "请输入图书的编号：" a b c d e f g h #假设书名不会超过15字符、另外先不判断不输入情况
-  	 	add_book_number=`echo "$a $b $c $d $e $f $g $h"` #是取反
+  read    -p "请输入图书的编号：" a b c d e f g h
+  	 	add_book_number=`echo "$a $b $c $d $e $f $g $h"
   	  echo -e "Number:$add_book_number\c" >> add_book_temp
 
-  read  -p "请输入图书的价格($)："  a b c d e f g h #假设价格不会超过15字符、另外先不判断不输入情况
-  	 	add_book_price=`echo  "$a $b $c $d $e $f $g $h"` #是取反,也可用$
-  	  echo -e " Price:$add_book_price" >> add_book_temp  #注意这个地方不能有 /c 连接符号（否则对删除有影响）
+  read  -p "请输入图书的价格($)："  a b c d e f g 			 #假设价格不会超过15字符、另外先不判断不输入情况
+  	 	add_book_price=`echo  "$a $b $c $d $e $f $g $h"`	 #是取反,也可用$
+  	  echo -e " Price:$add_book_price" >> add_book_temp  		 #注意：无 /c 连接符号（否则对删除功能有影响）
 
   	    cat add_book_temp >> /root/library.txt
   	    rm -rf add_book_temp
@@ -92,11 +92,11 @@ echo  -e "\t\t\t\t \e[1;46m   图书管理系统-版本0.3   \e[0m"
   	1) 
   		add_book 	  ;;
   	2)
-  	    display_List  ;;
+  	    	display_List	  ;;
   		
   	q)
 		clear
-  		quit_saybaby  ;;
+  		quit_saybaby  	  ;;
   	*)
 		Main_menu 	  ;;
   esac
@@ -104,17 +104,17 @@ echo  -e "\t\t\t\t \e[1;46m   图书管理系统-版本0.3   \e[0m"
 
 	#实现图书删除操作
 
-del_book()		#在这里只有通过图书名删除，通过序列号删除是最安全的，下一步实现
+del_book()								#在这里只有通过图书名删除，通过序列号删除是最安全的，下一步实现
 {
 clear
 echo  -e "\t\t\t\t \e[1;46m   图书管理系统-版本0.3   \e[0m"
   echo  -e "\n\n\n\t\t\t\t\e[1;35m ！！敏感操作 图书删除！！\e[0m\n" 
   read  -t 15  -p "请小主输入图书编号：" del_book_namee
   temp="Number:"
-  del_book_name=${temp}${del_book_namee}                              #追加字符串，和查找功能一樣
+  del_book_name=${temp}${del_book_namee}                              	#追加字符串，和查找功能一樣
 cat /root/library.txt | grep `echo -e $del_book_name` >> del_book_temp
 string=`cat del_book_temp`
-  	 if [[ -z $string ]]; then           # -z 如果字符串（即输入）为空，则为真
+  	 if [[ -z $string ]]; then      				# -z 如果字符串（即输入）为空，则为真
 
   	 	rm -rf del_book_temp
   		echo -e "\n\e[1;35m 没有图书信息/图书不存在 \e[0m \n\n"
@@ -128,7 +128,7 @@ string=`cat del_book_temp`
 			  		del_book 	 ;;
 			  	q)
 					clear
-			  		quit_saybaby ;;
+			  		quit_saybaby 	 ;;
 			  	*)
 					Main_menu 	 ;;
 			 esac
@@ -143,8 +143,7 @@ string=`cat del_book_temp`
 			   	read -p "请小主选择：" choice_Oper_book
 			  			case $choice_Oper_book  in
 						  	Y)
-								#实际上是剔除所删除的图书后，存入另外一个文件夹，然后，再给文件夹改名字（也是替换）
-								#方法不是很好，希望能有更好的方法。
+								#原理：剔除所删除的图书后，存入另外一个文件夹，然后，再给文件夹改名字（也是替换）
 								grep -v $del_book_name /root/library.txt > real_del_book_temp
 								mv real_del_book_temp /root/library.txt 
 							clear
@@ -154,14 +153,14 @@ string=`cat del_book_temp`
 									  read -p "请小主选择：" choice_del_next
 									  case $choice_del_next  in
 									  	0)
-									  		Main_menu	  ;;
+									  		Main_men     ;;
 									  	1)
-									  		del_book  	  ;;
+									  		del_book     ;;
 									  	q)
 											clear
-									  		quit_saybaby  ;;
+									  		quit_saybab  ;;
 									  	*)
-											Main_menu 	  ;;
+											Main_menu    ;;
 									  esac
 						  		 ;;
 						  	N)
@@ -181,7 +180,7 @@ display_List()
 	clear
 	echo  -e "\t\t\t\t \e[1;46m   图书管理系统-版本0.3   \e[0m"
 	display_string=`cat /root/library.txt`
-	clear                            # 这个清屏是不提示错误信息的作用 但是用&> /dev/dull 实现更好（语法忘了）
+	clear                           					 	# 这个清屏是不提示错误信息的作用 但是用&> /dev/dull 实现更好（语法忘了）
 	if [[ -z $display_string ]]; then
 			echo -e "图书列表为空\n\n"
 			echo -e "返回主目录:0   添加图书:1  退出:q \n" 
@@ -207,14 +206,14 @@ display_List()
 	  		read -p "请小主选择：" choice_Rrght_display_List_book
 	 		 case $choice_Rrght_display_List_book  in
 	  			0)
-	  				Main_menu 		;;
+	  				Main_menu 	;;
 	  			1)
 	  				search_book  	;;
 	  			q)
 					clear
 	  				quit_saybaby	;;
 	  			*)
-					Main_menu	    ;;
+					Main_menu       ;;
 	 		 esac
 	 		
 	fi
@@ -302,7 +301,7 @@ search_Book_IfEcho()
       	read -p "请小主选择：" choice_search_book
   			case $choice_search_book  in
 			  	0)
-			  		Main_menu	 ;;
+			  		Main_menu    ;;
 			  	1)
 			  		search_book  ;;
 			  	q)
@@ -320,14 +319,14 @@ search_Book_IfEcho()
 	  		read -p "请小主选择：" choice_Rrght_display_List_book
 	 		 case $choice_Rrght_display_List_book  in
 	  			0)
-	  				Main_menu 		;;
+	  				Main_menu 	;;
 	  			1)
 	  				search_book     ;;
 	  			q)
 					clear
 	  				quit_saybaby    ;;
 	  			*)
-					Main_menu 		;;
+					Main_menu 	;;
 	 		 esac
   	 fi
 }
